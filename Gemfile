@@ -32,6 +32,7 @@ gem 'spring',        group: :development
 
 gem 'capistrano'
 gem 'capistrano-rails'
+gem 'capistrano-rvm'
 
 # Use unicorn as the app server
 # gem 'unicorn'
