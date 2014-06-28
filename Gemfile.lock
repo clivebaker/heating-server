@@ -50,6 +50,7 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     colorize (0.7.3)
+    daemons (1.1.9)
     erubis (2.7.0)
     execjs (2.2.0)
     highcharts-rails (4.0.1)
@@ -143,6 +144,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   coffee-rails (~> 4.0.0)
+  daemons
   execjs
   highcharts-rails (~> 4.0.1)
   jbuilder (~> 2.0)
