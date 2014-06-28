@@ -51,4 +51,4 @@ production:
   <<: *default
   database: heating-server_production
   username: heating-server
-  password: <%= ENV['HEATING-SERVER_DATABASE_PASSWORD'] %>
+  password: khsducxjnhkssuhc

@@ -1,2 +1,155 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% content_for :js do %>
+<script>
+$(function () {
+    $(document).ready(function() {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+    
+        var chart;
+        $('#container-graph').highcharts({
+            chart: {
+                type: 'spline',
+                zoomType: 'x',
+                //animation: Highcharts.svg, // don't animate in old IE :MEMORY LEAK
+                marginRight: 10,
+                events: {
+                    load: function() {
+    
+                        // set up the updating of the chart each second
+                        var series_arr = this;
+                        setInterval(function() {
+
+                            var x = 0 
+                            var y = 0
+
+                                $.ajax({
+                                    type: "GET",
+                                    url: "/home/latest",
+                                    dataType: "json",
+                                    success: function(data){
+                                        
+                                        //line graph
+                                        for (var i = 1; i <= 5; i++) { 
+                                            sensor = eval("data.sensor"+i);
+                                            x = sensor.x
+                                            y = sensor.y
+                                            series_arr.series[i-1].addPoint([x, y], false, true);
+                                        }
+                                        series_arr.redraw();
+
+                                        // Gauges
+                                        for (var i = 1; i <= 5; i++) { 
+                                            sensor = eval("data.sensor"+i);
+                                            $('#container-sensor-'+i).highcharts().series[0].points[0].update(sensor.y);
+                                        }
+
+
+
+
+
+                                    }        
+                                });
+                            
+                        }, <%=Setting.where("setting=?","check_frequency").first.value.to_i*1000%>);
+                    }
+                }
+            },
+            title: {
+                text: 'Meadowcroft Heating'
+            },
+            credits: {
+                enabled: false
+            },
+    
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [
+            <%= raw sensor_data(1)%>,
+            <%= raw sensor_data(2)%>,
+            <%= raw sensor_data(3)%>,
+            <%= raw sensor_data(4)%>,
+            <%= raw sensor_data(5)%>,
+
+
+
+
+
+            ]
+        });
+    });
+    
+});
+    </script>
+
+
+
+<%#= render "gauge" %>
+
+<% end %>
+
+
+
+<div class="row">
+    <div class="small-12 large-12 columns">
+        &nbsp;
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 large-12 columns">
+        <div id="container-graph">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row gauges" >
+    <div class="small-12 large-12 columns">
+        
+
+<div >
+    <div id="container-sensor-1" class="gauge"></div>
+    <div id="container-sensor-2" class="gauge"></div>
+    <div id="container-sensor-3" class="gauge"></div>
+    <div id="container-sensor-4" class="gauge"></div>
+    <div id="container-sensor-5" class="gauge"></div>
+</div>
+
+
+    </div>    
+</div>
+
+
+
+
+
+

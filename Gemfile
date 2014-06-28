@@ -35,6 +35,8 @@ gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
 
+
+gem 'highcharts-rails', '~> 4.0.1'
 # Use unicorn as the app server
 # gem 'unicorn'
 
