@@ -92,12 +92,11 @@ $(function () {
                 enabled: false
             },
             series: [
-            <%= raw sensor_data(1)%>,
-            <%= raw sensor_data(2)%>,
-            <%= raw sensor_data(3)%>,
-            <%= raw sensor_data(4)%>,
-            <%= raw sensor_data(5)%>,
+       
 
+            <% @sensors.each do |sensor| %>
+                <%= raw sensor_data(sensir.id)%>,
+            <%end%>
 
 
 
