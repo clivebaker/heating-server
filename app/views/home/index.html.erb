@@ -30,22 +30,26 @@ $(function () {
                                     url: "/home/latest",
                                     dataType: "json",
                                     success: function(data){
+                                        size = data.size
                                         
                                         //line graph
-                                        for (var i = 1; i <= 5; i++) { 
+                                        $('#latest-temperatures').html("");
+                                        for (var i = 1; i <= size; i++) { 
                                             sensor = eval("data.sensor"+i);
                                             x = sensor.x
                                             y = sensor.y
                                             series_arr.series[i-1].addPoint([x, y], false, true);
+                                            $('#latest-temperatures').append("y: "+ y +"</br>"+ " x: "+new Date(x)+"</br></br>");
                                         }
                                         series_arr.redraw();
 
                                         // Gauges
-                                        for (var i = 1; i <= 5; i++) { 
-                                            sensor = eval("data.sensor"+i);
-                                            $('#container-sensor-'+i).highcharts().series[0].points[0].update(sensor.y);
-                                        }
+//                                        for (var i = 1; i <= 5; i++) { 
+ //                                           sensor = eval("data.sensor"+i);
+ //                                           $('#container-sensor-'+i).highcharts().series[0].points[0].update(sensor.y);
+ //                                       }
 
+                                        
 
 
 
@@ -130,6 +134,14 @@ $(function () {
 </div>
 
 
+<div class="row">
+    <div class="small-12 large-12 columns">
+        <div id="latest-temperatures">
+        </div>
+    </div>
+</div>
+
+
 
 <div class="row gauges" >
     <div class="small-12 large-12 columns">
@@ -142,6 +154,8 @@ $(function () {
     <div id="container-sensor-4" class="gauge"></div>
     <div id="container-sensor-5" class="gauge"></div>
 </div>
+
+
 
 
     </div>    

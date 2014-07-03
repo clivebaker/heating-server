@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :temperatures
 
   get 'home/index'
+  get 'home/test'
     get 'home/latest'
 
   # The priority is based upon order of creation: first created -> highest priority.

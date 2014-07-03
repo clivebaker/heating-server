@@ -35,6 +35,8 @@ gem 'capistrano'
 gem 'capistrano-rails'
 gem 'capistrano-rvm'
 
+gem 'foundation-rails'
+
 
 gem 'highcharts-rails', '~> 4.0.1'
 

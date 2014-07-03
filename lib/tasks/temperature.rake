@@ -10,11 +10,14 @@ namespace :temperature do
   desc "get latest data point"
   task :test => :environment do |task, args|
 
+       @sensors = Sensor.all
+
+
       while true do 
         wait_time = Setting.where("setting=?","check_frequency").first.value.to_i
         
-        (1..5).each do |index|
-          puts "Created: #{Temperature.create(sensor_id: index, value: rand(210..250)/10.to_f).inspect} Next one in #{wait_time} seconds"
+       @sensors.each do |sensor|
+          puts "Created: #{Temperature.create(sensor_id: sensor.id, value: rand(210..230)/10.to_f).inspect} Next one in #{wait_time} seconds"
         end
         sleep wait_time
       end
