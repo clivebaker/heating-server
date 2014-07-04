@@ -16,6 +16,31 @@
 
  */
 
+ @import url(http://fonts.googleapis.com/css?family=Unica+One);
+
 body {
 	/*background-color:#353537*/
+	font-family: 'Unica One', cursive;
+}
+
+
+#latest-temperatures ul li{
+	display:inline-block;
+
+}
+.sensor{
+	text-align:center;
+	margin:10px;
+	background-color:#4c4c4c;
+	width:80px;
+
+
+}
+
+.temperature{
+	font-size:30px;
+}
+.temperature-name{
+	display:block;
+	font-size:12px;
 }

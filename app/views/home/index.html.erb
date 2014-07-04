@@ -33,13 +33,23 @@ $(function () {
                                         size = data.size
                                         
                                         //line graph
-                                        $('#latest-temperatures').html("");
+                                        //$('#latest-temperatures').append($( "ul" ).addClass("individual-temperatures"));
+                                        //$('<ul/>').appendTo('#latest-temperatures');
+                                        var ul_list = $('#latest-temperatures').html($('<ul/>')).find("ul");
+
+
                                         for (var i = 1; i <= size; i++) { 
                                             sensor = eval("data.sensor"+i);
                                             x = sensor.x
                                             y = sensor.y
+                                            name = sensor.name
                                             series_arr.series[i-1].addPoint([x, y], false, true);
-                                            $('#latest-temperatures').append("y: "+ y +"</br>"+ " x: "+new Date(x)+"</br></br>");
+                                           
+
+                                            ul_list.append('<li class="sensor-'+i+' sensor"/>').find(".sensor-"+i).append("<span class='temperature'>"+ y +"</span><span class='temperature-name'>"+ name +"</span>");
+                                        
+
+
                                         }
                                         series_arr.redraw();
 
@@ -137,29 +147,15 @@ $(function () {
 <div class="row">
     <div class="small-12 large-12 columns">
         <div id="latest-temperatures">
+
+
+
         </div>
     </div>
 </div>
 
 
 
-<div class="row gauges" >
-    <div class="small-12 large-12 columns">
-        
-
-<div >
-    <div id="container-sensor-1" class="gauge"></div>
-    <div id="container-sensor-2" class="gauge"></div>
-    <div id="container-sensor-3" class="gauge"></div>
-    <div id="container-sensor-4" class="gauge"></div>
-    <div id="container-sensor-5" class="gauge"></div>
-</div>
-
-
-
-
-    </div>    
-</div>
 
 
 
