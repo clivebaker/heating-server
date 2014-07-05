@@ -161,7 +161,7 @@ $(function () {
             <ul>
                 <% @sensors.each do |sensor| %>
                 <li class="sensor-<%=sensor.id%> sensor">
-                    <span class='temperature'><%=sensor.temperatures.last.value%></span>
+                    <span class='temperature'><%= "%.1f" % sensor.temperatures.last.value%></span>
                     <span class='temperature-name'><%=sensor.name%></span>
                 </li>      
                 <% end %>
