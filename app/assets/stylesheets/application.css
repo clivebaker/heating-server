@@ -31,10 +31,14 @@ body {
 .sensor{
 	text-align:center;
 	margin:10px;
-	background-color:#4c4c4c;
+	background-color:#333;
 	width:80px;
 
 
+}
+
+.center{
+	text-align:center;
 }
 
 .temperature{

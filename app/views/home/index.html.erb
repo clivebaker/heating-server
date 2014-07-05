@@ -120,7 +120,16 @@ $(function () {
     });
     
 });
+
+
+
+ setInterval(function(){location.reload();},3600000)
+
+
     </script>
+
+
+
 
 
 
@@ -132,7 +141,7 @@ $(function () {
 
 <div class="row">
     <div class="small-12 large-12 columns">
-        &nbsp;
+         &nbsp;
     </div>
 </div>
 
@@ -149,6 +158,27 @@ $(function () {
         <div id="latest-temperatures">
 
 
+            <ul>
+                <% @sensors.each do |sensor| %>
+                <li class="sensor-<%=sensor.id%> sensor">
+                    <span class='temperature'><%=sensor.temperatures.last.value%></span>
+                    <span class='temperature-name'><%=sensor.name%></span>
+                </li>      
+                <% end %>
+            </ul>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="small-12 large-12 columns center">
+        <div>
+
+
+<%= "#{ Time.new.strftime("%d %B %Y - %H:%M:%S") }" %>
 
         </div>
     </div>

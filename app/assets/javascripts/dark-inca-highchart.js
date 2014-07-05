@@ -15,7 +15,7 @@ Highcharts.theme = {
       "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
    chart: {
 
-      backgroundColor: '#353537',
+      backgroundColor: '#000',
      // backgroundColor: {
 
         // linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
