@@ -28,6 +28,22 @@ namespace :temperature do
   desc "get latest data point"
   task :sensor => :environment do |task, args|
 
+
+  def cat( session, sensor )
+    session.open_channel do |channel|
+      channel.on_data do |ch, data|
+        #puts "DATA: #{data}"
+        temp =  data[data.index("t=")+2,7].to_f/1000
+        if temp > 0 && temp < 50
+          t = Temperature.create(value: temp, sensor_id: sensor.id)
+          puts "Created: #{t.inspect}"
+          end
+      end
+      channel.exec "cat /root/sensors/#{sensor.unique_id}/w1_slave"
+    end
+  end
+
+
     @sensors = Sensor.all
   	
   	while true do 
@@ -43,8 +59,11 @@ namespace :temperature do
               cat session, sensor
               session.loop
             end
+        
         rescue
-      
+          puts "Recovering from an issue"
+        end
+
       end
 
       sleep Setting.where("setting=?","check_frequency").first.value.to_i
@@ -54,19 +73,6 @@ namespace :temperature do
   end
 
 
-  def cat( session, sensor )
-    session.open_channel do |channel|
-      channel.on_data do |ch, data|
-        #puts "DATA: #{data}"
-        temp =  data[data.index("t=")+2,7].to_f/1000
-        if temp > 0 && temp < 50
-          t = Temperature.create(value: temp, sensor_id: sensor.id)
-          puts "Created: #{t.inspect}"
-          end
-      end
-      channel.exec "cat /root/sensors/#{sensor.unique_id}/w1_slave"
-    end
-  end
 
 
 
