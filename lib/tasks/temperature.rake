@@ -54,24 +54,45 @@ namespace :temperature do
   	
   	while true do 
   	
-      @sensors.each do |sensor|
-
+      @sensors.where(pi: "pi").each do |sensor|
         begin
             command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
             sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
 
-            puts "Command: #{command}"
+            puts "Command (1): #{command}"
 
             Net::SSH.start( 'pi','root' ) do |session|
               cat session, sensor
               session.loop
             end
-        
         rescue
           puts "Recovering from an issue"
         end
-
       end
+
+
+      @sensors.where(pi: "pi2").each do |sensor|
+        begin
+            command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
+            sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
+
+            puts "Command (2): #{command}"
+
+            Net::SSH.start( 'pi','root' ) do |session|
+              cat session, sensor
+              session.loop
+            end
+        rescue
+          puts "Recovering from an issue"
+        end
+      end
+
+
+
+
+
+
+
 
       sleep Setting.where("setting=?","check_frequency").first.value.to_i
 
