@@ -35,6 +35,8 @@ namespace :temperature do
       channel.on_data do |ch, data|
         puts "DATA: #{data}"
         temp =  data[data.index("t=")+2,7].to_f/1000
+        
+        puts "Temp: #{temp}"
         if temp > 0 && temp < 50
           t = Temperature.create(value: temp, sensor_id: sensor.id)
           puts "Created: #{t.inspect}"
