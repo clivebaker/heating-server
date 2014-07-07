@@ -51,7 +51,7 @@ namespace :temperature do
       @sensors.each do |sensor|
 
         begin
-            command = "ssh pi cat /root/sensors/#{sensor.unique_id}/w1_slave"
+            command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
             sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
 
 
