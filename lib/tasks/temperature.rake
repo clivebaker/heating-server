@@ -30,7 +30,7 @@ namespace :temperature do
 
 
   def cat( session, sensor )
-    puts "cat method called"
+  #  puts "cat method called"
     begin
     session.open_channel do |channel|
       channel.on_data do |ch, data|
@@ -62,7 +62,7 @@ namespace :temperature do
             command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
             sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
 
-            puts "Command (1): #{command}"
+     #       puts "Command (1): #{command}"
 
             Net::SSH.start( sensor.pi,'root' ) do |session|
               cat session, sensor
