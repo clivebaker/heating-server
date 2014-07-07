@@ -34,10 +34,10 @@ namespace :temperature do
     begin
     session.open_channel do |channel|
       channel.on_data do |ch, data|
-        puts "DATA: #{data}"
+    #   puts "DATA: #{data}"
         temp =  data[data.index("t=")+2,7].to_f/1000
         
-        puts "Temp: #{temp}"
+     #   puts "Temp: #{temp}"
         if temp > 0 && temp < 50
           t = Temperature.create(value: temp, sensor_id: sensor.id)
           puts "Created: #{t.inspect}"
@@ -57,14 +57,14 @@ namespace :temperature do
   	
   	while true do 
   	
-      @sensors.where(pi: "pi").each do |sensor|
+      @sensors.each do |sensor|
         begin
             command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
             sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
 
             puts "Command (1): #{command}"
 
-            Net::SSH.start( 'pi','root' ) do |session|
+            Net::SSH.start( sensor.pi,'root' ) do |session|
               cat session, sensor
               session.loop
             end
@@ -73,22 +73,6 @@ namespace :temperature do
         end
       end
 
-
-      @sensors.where(pi: "pi2").each do |sensor|
-        begin
-            command = "ssh #{sensor.pi} cat /root/sensors/#{sensor.unique_id}/w1_slave"
-            sensor_file = "/root/sensors/#{sensor.unique_id}/w1_slave"
-
-            puts "Command (2): #{command}"
-
-            Net::SSH.start( 'pi','root' ) do |session2|
-              cat session2, sensor
-              session2.loop
-            end
-        rescue
-          puts "Recovering from an issue"
-        end
-      end
 
 
 
